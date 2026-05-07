@@ -27,10 +27,14 @@ body {
   color: var(--text);
   display: flex;
   justify-content: center;
-  padding-top: calc(env(safe-area-inset-top) + 20px);
-  padding-left: calc(env(safe-area-inset-left) + 10px);
-  padding-right: calc(env(safe-area-inset-right) + 10px);
-  padding-bottom: calc(env(safe-area-inset-bottom) + 30px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+  padding-top: calc(constant(safe-area-inset-top, 0px) + 20px);
+  padding-left: calc(env(safe-area-inset-left, 0px) + 10px);
+  padding-left: calc(constant(safe-area-inset-left, 0px) + 10px);
+  padding-right: calc(env(safe-area-inset-right, 0px) + 10px);
+  padding-right: calc(constant(safe-area-inset-right, 0px) + 10px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 30px);
+  padding-bottom: calc(constant(safe-area-inset-bottom, 0px) + 30px);
   box-sizing: border-box;
 }
 

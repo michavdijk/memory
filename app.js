@@ -54,9 +54,36 @@ let moves = 0;
 let matchedPairs = 0;
 let timerId = null;
 let secondsElapsed = 0;
+let lastTouchEndTime = 0;
+
+function preventGestureZoom(event) {
+  event.preventDefault();
+}
+
+function preventMultiTouch(event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}
+
+function preventDoubleTapZoom(event) {
+  const now = performance.now();
+  const interactive = event.target.closest("button, .card, .action-button, a, input, textarea, select");
+  if (now - lastTouchEndTime < 300 && !interactive) {
+    event.preventDefault();
+  }
+  lastTouchEndTime = now;
+}
+
+function setupMobileGestureBlockers() {
+  document.addEventListener("gesturestart", preventGestureZoom, { passive: false });
+  document.addEventListener("touchmove", preventMultiTouch, { passive: false });
+  document.addEventListener("touchend", preventDoubleTapZoom, { passive: false });
+}
 
 function initializeGame() {
   registerServiceWorker();
+  setupMobileGestureBlockers();
   newGameButton.addEventListener("click", startNewGame);
   startNewGame();
 }

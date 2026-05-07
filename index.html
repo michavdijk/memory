@@ -2,16 +2,19 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#111111" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#071018">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>8-bit memory</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" href="icons/icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="app-shell">
-    <header class="app-header">
+  <div id="app" class="game">
+    <main class="app-shell">
+      <header class="app-header">
       <h1>8-bit memory</h1>
       <p>Vind de 8 paren</p>
     </header>
@@ -34,6 +37,7 @@
       <button id="newGameButton" class="action-button">Nieuw spel</button>
     </div>
   </main>
+  </div>
 
   <script src="app.js"></script>
 </body>

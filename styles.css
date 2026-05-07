@@ -1,0 +1,236 @@
+:root {
+  --bg: #081013;
+  --surface: #0f1724;
+  --surface-strong: #142738;
+  --text: #f8f8f2;
+  --accent: #40ff9b;
+  --accent2: #8be9fd;
+  --danger: #ff79c6;
+  --border: #2e4a6b;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: radial-gradient(circle at top, #16212d 0%, var(--bg) 45%, #020509 100%);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px 30px;
+}
+
+.app-shell {
+  width: min(460px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.app-header {
+  text-align: center;
+  padding: 18px 14px;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  background: rgba(15, 23, 36, 0.95);
+  box-shadow: 0 10px 25px var(--shadow);
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--accent2);
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.status-block {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.status-label {
+  display: block;
+  color: var(--accent2);
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+
+.status-block strong {
+  font-size: 1.65rem;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 11px;
+  padding: 4px;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+  will-change: transform;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  border: 3px solid var(--border);
+  box-shadow: 0 8px 20px var(--shadow);
+  background: transparent;
+  overflow: hidden;
+}
+
+.card.disabled {
+  pointer-events: none;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: center;
+  -webkit-transform-origin: center;
+  transition: transform 0.35s ease;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.card-back {
+  background: linear-gradient(180deg, #101820 0%, #0b1117 100%);
+  border: 2px dashed #2b4a6a;
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  z-index: 1;
+}
+
+.card-front {
+  background: linear-gradient(180deg, #0f4f37 0%, #102e27 100%);
+  color: #d3f7d8;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  border: 2px solid #40ff9b;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  text-shadow: 0 0 10px rgba(64,255,155,0.4);
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+  font-weight: 700;
+  z-index: 2;
+}
+
+.card-image {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  border-radius: 12px;
+}
+
+.card.flipped .card-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+.card.flipped .card-front {
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+}
+
+
+.card-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.card-face::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+
+.message {
+  min-height: 2.4rem;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.4;
+  color: var(--accent2);
+}
+
+.game-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-button {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #112032 0%, #162b44 100%);
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.action-button:hover,
+.action-button:focus {
+  transform: translateY(-1px);
+  background: linear-gradient(145deg, #152841 0%, #1f3955 100%);
+}
+
+.action-button:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 16px 8px 24px;
+  }
+
+  .game-board {
+    gap: 8px;
+  }
+}

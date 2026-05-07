@@ -3,8 +3,8 @@
   "short_name": "8-bit",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#071018",
-  "theme_color": "#071018",
+  "background_color": "#081013",
+  "theme_color": "#111111",
   "description": "Een retro 8-bit memory-spel voor mobiel met PWA-installatie en offline ondersteuning.",
   "icons": [
     {

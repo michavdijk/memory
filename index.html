@@ -14,12 +14,12 @@
 <body>
   <div id="app" class="game">
     <main class="app-shell">
-      <header class="app-header">
+      <header class="app-header header">
       <h1>8-bit memory</h1>
       <p>Vind de 8 paren</p>
     </header>
 
-    <section class="status-row" aria-live="polite">
+    <section class="status-row stats" aria-live="polite">
       <div class="status-block">
         <span class="status-label">Zetten</span>
         <strong id="moveCount">0</strong>
@@ -30,9 +30,9 @@
       </div>
     </section>
 
-    <section class="game-board" id="gameBoard" aria-label="Memory spelbord"></section>
+    <section class="game-board board" id="gameBoard" aria-label="Memory spelbord"></section>
 
-    <div class="game-footer">
+    <div class="game-footer actions">
       <p id="message" class="message"></p>
       <button id="newGameButton" class="action-button">Nieuw spel</button>
     </div>

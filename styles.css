@@ -16,16 +16,22 @@
 
 html, body {
   margin: 0;
+  padding: 0;
   min-height: 100%;
+  background: #071018;
 }
 
 body {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  background: radial-gradient(circle at top, #16212d 0%, var(--bg) 45%, #020509 100%);
+  background: #071018;
   color: var(--text);
   display: flex;
   justify-content: center;
-  padding: 20px 10px 30px;
+  padding-top: calc(env(safe-area-inset-top) + 20px);
+  padding-left: calc(env(safe-area-inset-left) + 10px);
+  padding-right: calc(env(safe-area-inset-right) + 10px);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 30px);
+  box-sizing: border-box;
 }
 
 .app-shell {

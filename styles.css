@@ -261,12 +261,14 @@ main {
   font-size: 0.96rem;
   line-height: 1.4;
   color: var(--accent2);
+  text-align: center;
 }
 
 .game-footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
 }
 
 .action-button {

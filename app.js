@@ -185,8 +185,8 @@ function unflipCard(cardElement) {
 function markMatch() {
   deck[Number(firstCard.dataset.id)].matched = true;
   deck[Number(secondCard.dataset.id)].matched = true;
-  firstCard.classList.add("disabled");
-  secondCard.classList.add("disabled");
+  firstCard.classList.add("disabled", "matched");
+  secondCard.classList.add("disabled", "matched");
   matchedPairs += 1;
   playMatchSound();
   vibrate([20, 20, 20]);

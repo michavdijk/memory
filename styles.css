@@ -220,11 +220,25 @@ main {
   -webkit-transform: rotateY(180deg);
 }
 
-.card.flipped .card-front {
+.card.flipped:not(.matched) .card-front {
   transform: rotateY(0deg);
   -webkit-transform: rotateY(0deg);
+  background: linear-gradient(180deg, #f6ba7f 0%, #d9772e 100%);
+  border: 2px solid #ffb347;
+  color: #fef1dd;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  text-shadow: 0 0 10px rgba(255, 180, 105, 0.25);
 }
 
+.card.flipped.matched .card-front {
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  background: linear-gradient(180deg, #0f4f37 0%, #102e27 100%);
+  border: 2px solid #40ff9b;
+  color: #d3f7d8;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  text-shadow: 0 0 10px rgba(64,255,155,0.4);
+}
 
 .card-face::after {
   content: "";

@@ -41,7 +41,7 @@ const cardArt = [
   }
 ];
 const gameBoard = document.getElementById("gameBoard");
-const moveCountLabel = document.getElementById("moveCount");
+const attemptCountLabel = document.getElementById("attemptCount");
 const timerLabel = document.getElementById("timer");
 const messageLabel = document.getElementById("message");
 const newGameButton = document.getElementById("newGameButton");
@@ -50,7 +50,7 @@ let deck = [];
 let firstCard = null;
 let secondCard = null;
 let canFlip = true;
-let moves = 0;
+let attempts = 0;
 let matchedPairs = 0;
 let timerId = null;
 let secondsElapsed = 0;
@@ -102,7 +102,7 @@ function resetGameState() {
   firstCard = null;
   secondCard = null;
   canFlip = true;
-  moves = 0;
+  attempts = 0;
   matchedPairs = 0;
   secondsElapsed = 0;
   if (timerId) {
@@ -161,7 +161,7 @@ function handleCardClick(event) {
   }
 
   secondCard = cardElement;
-  moves += 1;
+  attempts += 1;
   updateStatusLabels();
 
   const firstType = deck[Number(firstCard.dataset.id)].type;
@@ -217,7 +217,7 @@ function markMismatch() {
 function endGame() {
   playWinSound();
   vibrate([40, 20, 40]);
-  setMessage(`Klaar! ${moves} zetten, ${formatTime(secondsElapsed)}.`);
+  setMessage(`Klaar! ${attempts} pogingen, ${formatTime(secondsElapsed)}.`);
   canFlip = false;
   if (timerId) {
     clearInterval(timerId);
@@ -226,7 +226,7 @@ function endGame() {
 }
 
 function updateStatusLabels() {
-  moveCountLabel.textContent = moves.toString();
+  attemptCountLabel.textContent = attempts.toString();
   timerLabel.textContent = formatTime(secondsElapsed);
 }
 

@@ -45,6 +45,10 @@ const attemptCountLabel = document.getElementById("attemptCount");
 const timerLabel = document.getElementById("timer");
 const messageLabel = document.getElementById("message");
 const newGameButton = document.getElementById("newGameButton");
+const bestTimeLabel = document.getElementById("bestTime");
+const bestAttemptsLabel = document.getElementById("bestAttempts");
+
+const HIGHSCORES_STORAGE_KEY = "retroMemoryHighscores";
 
 let deck = [];
 let firstCard = null;
@@ -55,6 +59,10 @@ let matchedPairs = 0;
 let timerId = null;
 let secondsElapsed = 0;
 let lastTouchEndTime = 0;
+let highscores = {
+  bestTime: null,
+  bestAttempts: null
+};
 
 function preventGestureZoom(event) {
   event.preventDefault();
@@ -84,6 +92,8 @@ function setupMobileGestureBlockers() {
 function initializeGame() {
   registerServiceWorker();
   setupMobileGestureBlockers();
+  highscores = loadHighscores();
+  updateHighscoreLabels();
   newGameButton.addEventListener("click", startNewGame);
   startNewGame();
 }
@@ -217,6 +227,7 @@ function markMismatch() {
 function endGame() {
   playWinSound();
   vibrate([40, 20, 40]);
+  updateHighscores(secondsElapsed, attempts);
   setMessage(`Klaar! ${attempts} pogingen, ${formatTime(secondsElapsed)}.`);
   canFlip = false;
   if (timerId) {
@@ -228,6 +239,68 @@ function endGame() {
 function updateStatusLabels() {
   attemptCountLabel.textContent = attempts.toString();
   timerLabel.textContent = formatTime(secondsElapsed);
+}
+
+function loadHighscores() {
+  try {
+    const savedHighscores = window.localStorage.getItem(HIGHSCORES_STORAGE_KEY);
+    if (!savedHighscores) {
+      return createEmptyHighscores();
+    }
+
+    const parsedHighscores = JSON.parse(savedHighscores);
+    return {
+      bestTime: normalizeHighscoreValue(parsedHighscores.bestTime),
+      bestAttempts: normalizeHighscoreValue(parsedHighscores.bestAttempts)
+    };
+  } catch (error) {
+    console.warn("Highscores konden niet worden geladen:", error);
+    return { ...highscores };
+  }
+}
+
+function saveHighscores() {
+  try {
+    window.localStorage.setItem(HIGHSCORES_STORAGE_KEY, JSON.stringify(highscores));
+  } catch (error) {
+    console.warn("Highscores konden niet worden opgeslagen:", error);
+  }
+}
+
+function updateHighscores(finalTime, finalAttempts) {
+  const hasFasterTime = highscores.bestTime === null || finalTime < highscores.bestTime;
+  const hasFewerAttempts = highscores.bestAttempts === null || finalAttempts < highscores.bestAttempts;
+
+  if (!hasFasterTime && !hasFewerAttempts) {
+    return;
+  }
+
+  if (hasFasterTime) {
+    highscores.bestTime = finalTime;
+  }
+
+  if (hasFewerAttempts) {
+    highscores.bestAttempts = finalAttempts;
+  }
+
+  saveHighscores();
+  updateHighscoreLabels();
+}
+
+function createEmptyHighscores() {
+  return {
+    bestTime: null,
+    bestAttempts: null
+  };
+}
+
+function normalizeHighscoreValue(value) {
+  return Number.isInteger(value) && value >= 0 ? value : null;
+}
+
+function updateHighscoreLabels() {
+  bestTimeLabel.textContent = highscores.bestTime === null ? "--:--" : formatTime(highscores.bestTime);
+  bestAttemptsLabel.textContent = highscores.bestAttempts === null ? "--" : highscores.bestAttempts.toString();
 }
 
 function setMessage(text) {

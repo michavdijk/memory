@@ -68,6 +68,7 @@ main {
 
 .header,
 .stats,
+.highscore-panel,
 .message,
 .actions {
   flex: 0 0 auto;
@@ -135,6 +136,39 @@ main {
 
 .status-block strong {
   font-size: 1.65rem;
+}
+
+.highscore-panel {
+  padding: 10px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: rgba(15, 23, 36, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.highscore-values {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.highscore-values p {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  color: var(--accent2);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.highscore-values strong {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 0.94rem;
 }
 
 .game-board {
@@ -297,27 +331,58 @@ main {
 
 @media (max-width: 420px), (max-height: 760px) {
   .app-shell {
-    gap: 12px;
-  }
-
-  .app-header {
-    padding: 18px 12px;
-  }
-
-  .status-row {
-    gap: 12px;
-  }
-
-  .status-block {
-    padding: 14px;
-  }
-
-  .board {
     gap: 10px;
   }
 
+  .app-header {
+    padding: 14px 12px;
+  }
+
+  .app-header h1 {
+    margin-bottom: 6px;
+    font-size: 1.72rem;
+  }
+
+  .status-row {
+    gap: 10px;
+  }
+
+  .status-block {
+    padding: 11px 12px;
+  }
+
+  .status-label {
+    margin-bottom: 6px;
+  }
+
+  .status-block strong {
+    font-size: 1.45rem;
+  }
+
+  .highscore-panel {
+    padding: 8px;
+  }
+
+  .highscore-values p {
+    font-size: 0.66rem;
+  }
+
+  .highscore-values strong {
+    font-size: 0.84rem;
+  }
+
+  .board {
+    gap: 8px;
+  }
+
+  .game-board {
+    align-self: center;
+    width: min(100%, calc(100dvh - 300px));
+  }
+
   .message {
-    font-size: 18px;
+    min-height: 2rem;
+    font-size: 16px;
   }
 
   .action-button,

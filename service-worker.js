@@ -1,4 +1,4 @@
-const CACHE_NAME = "retro-memory-cache-v6";
+const CACHE_NAME = "retro-memory-cache-v10";
 const ASSETS_TO_CACHE = [
   "/index.html",
   "/styles.css",

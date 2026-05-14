@@ -49,6 +49,8 @@ const bestTimeLabel = document.getElementById("bestTime");
 const bestAttemptsLabel = document.getElementById("bestAttempts");
 
 const HIGHSCORES_STORAGE_KEY = "retroMemoryHighscores";
+const FORGIVING_TAP_MARGIN = 18;
+const POINTER_CLICK_SUPPRESSION_MS = 450;
 
 let deck = [];
 let firstCard = null;
@@ -59,6 +61,7 @@ let matchedPairs = 0;
 let timerId = null;
 let secondsElapsed = 0;
 let lastTouchEndTime = 0;
+let lastPointerActivationTime = 0;
 let highscores = {
   bestTime: null,
   bestAttempts: null
@@ -95,6 +98,8 @@ function initializeGame() {
   highscores = loadHighscores();
   updateHighscoreLabels();
   newGameButton.addEventListener("click", startNewGame);
+  gameBoard.addEventListener("pointerdown", handleBoardPointerDown);
+  gameBoard.addEventListener("click", handleBoardClick);
   startNewGame();
 }
 
@@ -144,17 +149,80 @@ function renderBoard() {
       <span class="card-face card-back"></span>
       <span class="card-face card-front"><img class="card-image" src="${card.image}" alt="${card.alt}" /></span>
     `;
-    button.addEventListener("click", handleCardClick);
     gameBoard.appendChild(button);
   });
 }
 
-function handleCardClick(event) {
+function handleBoardPointerDown(event) {
+  if (!event.isPrimary || event.button > 0) {
+    return;
+  }
+
+  const cardElement = getCardFromInputEvent(event);
+
+  if (!cardElement) {
+    return;
+  }
+
+  event.preventDefault();
+  lastPointerActivationTime = performance.now();
+  handleCardSelection(cardElement);
+}
+
+function handleBoardClick(event) {
+  if (performance.now() - lastPointerActivationTime < POINTER_CLICK_SUPPRESSION_MS) {
+    event.preventDefault();
+    return;
+  }
+
+  const cardElement = getCardFromInputEvent(event);
+
+  if (cardElement) {
+    handleCardSelection(cardElement);
+  }
+}
+
+function getCardFromInputEvent(event) {
+  return getDirectCard(event.target) || getNearestCard(event.clientX, event.clientY);
+}
+
+function getDirectCard(target) {
+  if (!(target instanceof Element)) {
+    return null;
+  }
+
+  const cardElement = target.closest(".card");
+  return cardElement && gameBoard.contains(cardElement) ? cardElement : null;
+}
+
+function getNearestCard(clientX, clientY) {
+  let nearestCard = null;
+  let nearestDistance = Infinity;
+
+  gameBoard.querySelectorAll(".card").forEach((cardElement) => {
+    if (cardElement.classList.contains("matched") || cardElement === firstCard) {
+      return;
+    }
+
+    const rect = cardElement.getBoundingClientRect();
+    const horizontalDistance = Math.max(rect.left - clientX, 0, clientX - rect.right);
+    const verticalDistance = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
+    const distance = Math.hypot(horizontalDistance, verticalDistance);
+
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestCard = cardElement;
+    }
+  });
+
+  return nearestDistance <= FORGIVING_TAP_MARGIN ? nearestCard : null;
+}
+
+function handleCardSelection(cardElement) {
   if (!canFlip) {
     return;
   }
 
-  const cardElement = event.currentTarget;
   const cardId = Number(cardElement.dataset.id);
   const cardData = deck[cardId];
 

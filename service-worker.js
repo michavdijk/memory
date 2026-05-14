@@ -1,4 +1,4 @@
-const CACHE_NAME = "retro-memory-cache-v10";
+const CACHE_NAME = "retro-memory-cache-v11";
 const ASSETS_TO_CACHE = [
   "/index.html",
   "/styles.css",
@@ -21,6 +21,8 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE);
+    }).then(() => {
+      return self.skipWaiting();
     })
   );
 });
@@ -36,7 +38,9 @@ self.addEventListener("activate", (event) => {
           }
           return null;
         })
-      );
+      ).then(() => {
+        return self.clients.claim();
+      });
     })
   );
 });

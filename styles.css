@@ -79,9 +79,9 @@ main {
   min-height: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 11px;
+  gap: 7px;
   align-content: center;
-  padding: 4px;
+  padding: 2px;
 }
 
 .card {
@@ -174,10 +174,11 @@ main {
 .game-board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 11px;
-  padding: 4px;
+  gap: 7px;
+  padding: 2px;
   perspective: 800px;
   -webkit-perspective: 800px;
+  touch-action: manipulation;
 }
 
 .card {
@@ -197,10 +198,13 @@ main {
   box-shadow: 0 8px 20px var(--shadow);
   background: transparent;
   overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card.disabled {
-  pointer-events: none;
+  cursor: default;
 }
 
 .card-face {
@@ -217,6 +221,7 @@ main {
   transition: transform 0.35s ease;
   border-radius: 14px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .card-back {
@@ -247,6 +252,7 @@ main {
   image-rendering: crisp-edges;
   image-rendering: pixelated;
   border-radius: 12px;
+  pointer-events: none;
 }
 
 .card.flipped .card-back {
@@ -372,7 +378,7 @@ main {
   }
 
   .board {
-    gap: 8px;
+    gap: 6px;
   }
 
   .game-board {

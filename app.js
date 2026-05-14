@@ -51,6 +51,7 @@ const bestAttemptsLabel = document.getElementById("bestAttempts");
 const HIGHSCORES_STORAGE_KEY = "retroMemoryHighscores";
 const FORGIVING_TAP_MARGIN = 18;
 const POINTER_CLICK_SUPPRESSION_MS = 450;
+const MISMATCH_REVEAL_MS = 500;
 
 let deck = [];
 let firstCard = null;
@@ -289,7 +290,7 @@ function markMismatch() {
     secondCard = null;
     canFlip = true;
     setMessage("Tik een kaart en zoek een match.");
-  }, 900);
+  }, MISMATCH_REVEAL_MS);
 }
 
 function endGame() {

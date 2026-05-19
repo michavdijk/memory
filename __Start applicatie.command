@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 sleep 0.5 && open "http://localhost:8123" &
 
 echo "======================================"
-echo "  Voortgangsplaat wordt gestart..."
+echo "  Memory wordt gestart..."
 echo "  Open: http://localhost:8123"
 echo "  Sluit dit venster om te stoppen."
 echo "======================================"
